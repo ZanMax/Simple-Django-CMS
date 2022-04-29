@@ -6,9 +6,6 @@ Start page
 
 {% block content %}
 
-
-
-<!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-3">Hello, CMS!</h1>
@@ -21,34 +18,19 @@ Start page
 </div>
 
 <div class="container">
-    <!-- Example row of columns -->
     <div class="row">
+        {% for post in posts %}
         <div class="col-md-4">
-            <h2>Blog post #1</h2>
-            <p>Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-                dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
-                a type specimen book. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            <h2>{{ post.title }}</h2>
+            <p>
+                {{ post.text }}
+            </p>
+            <p><a class="btn btn-secondary" href="{% url 'post' post.url %}" role="button">View details »</a></p>
         </div>
-        <div class="col-md-4">
-            <h2>Blog post #2</h2>
-            <p>It is a long established fact that a reader will be distracted by the readable content of a page when
-                looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
-                of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Blog post #3</h2>
-            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-                in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
-        </div>
+        {% endfor %}
     </div>
 
     <hr>
 
-</div> <!-- /container -->
-
-
-
+</div>
 {% endblock %}
