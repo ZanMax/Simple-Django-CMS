@@ -40,6 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+"""
+ORDERING_APPS = {
+    "Posts": 1,
+    "Authors": 2,
+    "PostStatusess": 3,
+    "PostTypess": 4,
+    "Users": 5,
+    "Groups": 6,
+}
+"""
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

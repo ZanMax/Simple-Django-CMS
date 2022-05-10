@@ -1,7 +1,9 @@
+from tabnanny import verbose
 from django.db import models
 import datetime
 from ckeditor.fields import RichTextField
 from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 # Create your models here.
 
@@ -12,6 +14,9 @@ class PostStatuses(models.Model):
     def __str__(self):
         return self.status
 
+    class Meta:
+        verbose_name_plural = "Statuses"
+
 
 class PostTypes(models.Model):
     type = models.CharField(max_length=32, unique=True, default='post')
@@ -19,30 +24,43 @@ class PostTypes(models.Model):
     def __str__(self):
         return self.type
 
+    class Meta:
+        verbose_name_plural = "Types"
+
+
+class Tags(models.Model):
+    tag = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.tag
+
+    class Meta:
+        verbose_name_plural = "Tags"
+
 
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     articles_count = models.IntegerField(validators=[MinValueValidator(1)])
-    experience = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(50)])
-    age = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(90)])
+    experience = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(50)])
+    age = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(90)])
     education = models.CharField(max_length=255)
     degree = models.CharField(max_length=255)
     position = models.CharField(max_length=255)
     expertise = models.CharField(max_length=255)
     about = RichTextField()
 
-    def full_name(self):
-        return f'{self.first_name} {self.last_name}'
-    
     def __str__(self):
-        return self.full_name
+        return f'{self.first_name} {self.last_name}'
+
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
     date = models.DateTimeField()
     post_modified = models.DateTimeField()
-    author = models.CharField(max_length=100)
+    author = models.ForeignKey(Author, on_delete=models.DO_NOTHING, null=True)
     text = RichTextField()
     url = models.SlugField(max_length=255, unique=True,
                            null=False, db_index=True)
@@ -50,8 +68,14 @@ class Post(models.Model):
         PostTypes, default=1, on_delete=models.DO_NOTHING)
     status = models.ForeignKey(
         PostStatuses, default=1, on_delete=models.DO_NOTHING)
+    likes = models.IntegerField(default=0)
+    read_time = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
 
     def save(self, *args, **kwargs):
         now = datetime.datetime.now()
         self.post_modified = now.strftime("%Y-%m-%d %H:%M:%S")
+        self.read_time = int(round((len(self.text)/200), 0))
         super().save(*args, **kwargs)
