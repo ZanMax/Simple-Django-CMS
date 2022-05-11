@@ -7,7 +7,7 @@ from django.conf import settings
 
 class PostAdmin(admin.ModelAdmin):
     fields = ('title', 'url', 'text', 'date', 'post_modified',
-              'read_time', 'post_type', 'status', "author",)
+              'read_time', 'post_type', 'status', "author", "tags", )
     prepopulated_fields = {"url": ("title",)}
     readonly_fields = ("post_modified",)
     list_filter = ("post_type", "status", "author")

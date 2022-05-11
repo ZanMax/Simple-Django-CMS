@@ -60,7 +60,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     date = models.DateTimeField()
     post_modified = models.DateTimeField()
-    author = models.ForeignKey(Author, on_delete=models.DO_NOTHING, null=True)
+    author = models.ForeignKey(Author, on_delete=models.DO_NOTHING, null=True, related_name="posts")
     text = RichTextField()
     url = models.SlugField(max_length=255, unique=True,
                            null=False, db_index=True)
@@ -70,6 +70,7 @@ class Post(models.Model):
         PostStatuses, default=1, on_delete=models.DO_NOTHING)
     likes = models.IntegerField(default=0)
     read_time = models.IntegerField(default=0)
+    tags = models.ManyToManyField(Tags)
 
     def __str__(self):
         return self.title
@@ -79,3 +80,7 @@ class Post(models.Model):
         self.post_modified = now.strftime("%Y-%m-%d %H:%M:%S")
         self.read_time = int(round((len(self.text)/200), 0))
         super().save(*args, **kwargs)
+
+    class Meta:
+        get_latest_by = ['date']
+        ordering = ['-date']
