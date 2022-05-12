@@ -22,7 +22,7 @@ class Reviews(models.Model):
         ReviewsStatuses, default=1, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return f'self.name - self.rating'
+        return f'{self.name} - {self.rating}'
 
     class Meta:
         verbose_name_plural = "Reviews"

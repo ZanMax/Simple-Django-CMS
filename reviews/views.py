@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views import View
 
 from reviews.forms import ReviewForm
+from .models import Reviews
 
 # Create your views here.
 
@@ -20,4 +21,5 @@ class ReviewView(View):
 
 
 def reviews(request):
-    pass
+    reviews = Reviews.objects.all()
+    return render(request, "reviews.html", {"reviews": reviews})
