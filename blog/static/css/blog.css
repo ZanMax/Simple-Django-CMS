@@ -1,7 +1,41 @@
 .blog-post {
     margin: 20px;
+    padding: 10px;
+    display: block;
+    border:1px solid black;
 }
 
 .blog-pagination {
     text-align: center;
+}
+
+.form-control {
+    margin-bottom: 1rem;
+    border: 0;
+}
+
+.form-control label {
+    font-weight: inherit;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control input,
+.form-control textarea {
+    display: block;
+    width: 50%;
+    font: inherit;
+    padding: 0.25rem;
+    border-radius: 6px;
+}
+
+.comment-form {
+    width: 90%;
+    margin: 3rem auto;
+}
+
+.comment-form button {
+    font: inherit;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
 }

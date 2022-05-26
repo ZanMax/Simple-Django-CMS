@@ -6,7 +6,8 @@ body {
     position: relative;
     bottom: 0;
     width: 100%;
-    background-color: red;
-    color: white;
+    background-color: #fff;
+    color: #000;
     text-align: center;
+    display: block;
 }

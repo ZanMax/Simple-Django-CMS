@@ -1,3 +1,4 @@
+from shutil import unregister_unpack_format
 from tabnanny import verbose
 from django.db import models
 import datetime
@@ -60,7 +61,8 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     date = models.DateTimeField()
     post_modified = models.DateTimeField()
-    author = models.ForeignKey(Author, on_delete=models.DO_NOTHING, null=True, related_name="posts")
+    author = models.ForeignKey(
+        Author, on_delete=models.DO_NOTHING, null=True, related_name="posts")
     text = RichTextField()
     url = models.SlugField(max_length=255, unique=True,
                            null=False, db_index=True)
@@ -71,6 +73,7 @@ class Post(models.Model):
     likes = models.IntegerField(default=0)
     read_time = models.IntegerField(default=0)
     tags = models.ManyToManyField(Tags)
+    comment_allowed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -84,3 +87,18 @@ class Post(models.Model):
     class Meta:
         get_latest_by = ['date']
         ordering = ['-date']
+
+
+class Comment(models.Model):
+    user_name = models.CharField(max_length=80)
+    user_email = models.CharField(max_length=120)
+    user_ip = models.CharField(max_length=120)
+    comment = models.TextField()
+    post_id = models.ForeignKey(
+        Post, on_delete=models.DO_NOTHING, null=True, related_name="comments")
+    date = models.DateTimeField()
+    approved = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        now = datetime.datetime.now()
+        self.date = now.strftime("%Y-%m-%d %H:%M:%S")

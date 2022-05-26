@@ -18,7 +18,23 @@ Blog post page
             <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a></p>
             {{post.text}}
         </div>
-
+        {% if post.comment_allowed %}
+        <div>
+            <form class="comment-form">
+                {% csrf_token %}
+                {% for comment_field in comment_form %}
+                <div class="form-control">
+                    {{ comment_field.label_tag }}
+                    {{ comment_field }}
+                    {{ comment_field.errors }}
+                </div>
+                {% endfor %}
+                <div class="form-control">
+                    <button>Save comment</button>
+                </div>
+            </form>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

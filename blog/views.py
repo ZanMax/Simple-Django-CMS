@@ -2,6 +2,7 @@ from datetime import date
 from turtle import pos
 from django.shortcuts import render, get_object_or_404
 from .models import Post
+from .forms import CommentForm
 
 
 def index(request):
@@ -16,9 +17,9 @@ def blog(request):
 
 def post(request, post_url):
     post = get_object_or_404(Post, url=post_url, status=2)
-    return render(request, "post.html", {"post": post})
+    return render(request, "post.html", {"post": post, "comment_form": CommentForm})
 
 
 def page(request, page_url):
     page = get_object_or_404(Post, url=page_url, status=2, post_type=2)
-    return render(request, "page.html", {"page": page})
+    return render(request, "page.html", {"page": page, "comment_form": CommentForm})
