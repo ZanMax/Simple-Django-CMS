@@ -13,10 +13,15 @@ Page
 <div class="row">
     <div class="col-md-8 blog-main">
 
-        <div class="blog-post">
+        <div class="blog-post blog-post-detail">
             <h2 class="blog-post-title">{{page.title}}</h2>
+            <small>Tags:
+                {% for tag in tags %}
+                    <a href="/search/tag/{{ tag }}">{{ tag }}</a>
+                {% endfor %}
+            </small>
             <p class="blog-post-meta">{{page.date}} by <a href="#">{{page.author}}</a></p>
-            {{page.text}}
+            {{ page.text | safe }}
         </div>
         {% if page.comment_allowed %}
         <div>

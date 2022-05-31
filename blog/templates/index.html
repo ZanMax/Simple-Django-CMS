@@ -23,7 +23,7 @@ Start page
         <div class="col-md-4">
             <h2>{{ post.title }}</h2>
             <p>
-                {{ post.text }}
+                {{ post.text | safe }}
             </p>
             <p><a class="btn btn-secondary" href="{% url 'post' post.url %}" role="button">View details »</a></p>
         </div>

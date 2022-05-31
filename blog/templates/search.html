@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Search
+{% endblock %}
+
+{% block css_files %}
+<link href="{% static 'css/blog.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 blog-main">
+
+        <div class="status-msg-body">
+            Showing posts with tag: <b>{{ tag }}</b>. <a href="/blog">Show all posts</a>
+        </div>
+
+        {% for post in posts %}
+        <div class="blog-post">
+            <h2 class="blog-post-title"><a href="{% url 'post' post.url %}">{{ post.title }}</a></h2>
+            <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a></p>
+
+            {{ post.text | safe }}
+        </div>
+        {% endfor %}
+
+
+    </div><!-- /.blog-main -->
+
+    <aside class="col-md-4 blog-sidebar">
+
+        <div class="p-3">
+            <h4 class="font-italic">Tags</h4>
+            <ol class="list-unstyled mb-0">
+                {% for tag in tags %}
+                    <li><a href="/search/tag/{{tag}}">{{ tag }}</a></li>
+                {% endfor %}
+            </ol>
+        </div>
+
+        <div class="p-3">
+        </div>
+    </aside><!-- /.blog-sidebar -->
+
+</div>
+{% endblock %}

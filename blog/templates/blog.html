@@ -18,7 +18,7 @@ Blog list page
             <h2 class="blog-post-title"><a href="{% url 'post' post.url %}">{{ post.title }}</a></h2>
             <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a></p>
 
-            {{ post.text }}
+            {{ post.text | safe }}
         </div>
         {% endfor %}
 

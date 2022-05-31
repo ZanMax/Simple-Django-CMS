@@ -2,7 +2,11 @@
     margin: 20px;
     padding: 10px;
     display: block;
-    border:1px solid black;
+    border: 1px solid black;
+}
+
+.blog-post-detail {
+    min-height: 400px;
 }
 
 .blog-pagination {
@@ -38,4 +42,12 @@
     font: inherit;
     padding: 0.5rem 1.5rem;
     border-radius: 6px;
+}
+
+.status-msg-body {
+    text-align: center;
+    padding: 0.3em 0;
+    width: 100%;
+    position: relative;
+    z-index: 4;
 }
