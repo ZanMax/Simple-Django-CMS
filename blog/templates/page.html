@@ -25,7 +25,7 @@ Page
         </div>
         {% if page.comment_allowed %}
         <div>
-            <form class="comment-form">
+            <form action="" method="POST" class="comment-form">
                 {% csrf_token %}
                 {% for comment_field in comment_form %}
                 <div class="form-control">
