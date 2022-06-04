@@ -3,6 +3,7 @@ autopep8==1.6.0
 backports.zoneinfo==0.2.1
 Django==4.0.4
 django-ckeditor==6.4.0
+django-environ==0.8.1
 django-js-asset==2.0.0
 mysqlclient==2.1.0
 pycodestyle==2.8.0

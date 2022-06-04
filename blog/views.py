@@ -1,8 +1,8 @@
-from datetime import date
-from turtle import pos
 from django.shortcuts import render, get_object_or_404
-from .models import Post, Tags
+from django.views import View
+
 from .forms import CommentForm
+from .models import Post, Tags
 
 
 def index(request):
@@ -29,10 +29,22 @@ def page(request, page_url):
 
 def search_tag(request, tag):
     tags = Tags.objects.all()
-    #posts = Post.objects.filter(status=2).order_by("-date")
+    # posts = Post.objects.filter(status=2).order_by("-date")
     print(tag)
-    #posts = Post.objects.values('tags__tag', 'url', 'title', 'date', 'author__first_name', 'text').filter(status=2, tags__tag=tag).order_by("-date")
+    # posts = Post.objects.values('tags__tag', 'url', 'title', 'date', 'author__first_name', 'text').filter(status=2, tags__tag=tag).order_by("-date")
     posts = Post.objects.values('tags__tag', 'url', 'title', 'date', 'author__first_name', 'text')
     f_posts = posts.filter(tags__tag='math', status=2).values()
     print(f_posts)
     return render(request, "search.html", {"posts": f_posts, "tag": tag, "tags": tags})
+
+
+class PostView(View):
+    def get(self, request, post_url):
+        post_detail = get_object_or_404(Post, url=post_url, status=2)
+        context = {"post": post_detail,
+                   "tags": post_detail.tags.all(),
+                   "comment_form": CommentForm}
+        return render(request, "post.html", context)
+
+    def post(self):
+        pass

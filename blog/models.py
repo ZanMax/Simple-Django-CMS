@@ -81,7 +81,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         now = datetime.datetime.now()
         self.post_modified = now.strftime("%Y-%m-%d %H:%M:%S")
-        self.read_time = int(round((len(self.text)/200), 0))
+        self.read_time = int(round((len(self.text) / 200), 0))
         super().save(*args, **kwargs)
 
     class Meta:
