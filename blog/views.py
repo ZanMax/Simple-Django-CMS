@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.views import View
-
+from django.http import HttpResponseRedirect
 from .forms import CommentForm
 from .models import Post, Tags
 
@@ -46,5 +47,17 @@ class PostView(View):
                    "comment_form": CommentForm}
         return render(request, "post.html", context)
 
-    def post(self):
-        pass
+    def post(self, request, post_url):
+        comment_form = CommentForm(request.POST)
+        post_detail = get_object_or_404(Post, url=post_url, status=2)
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post_id = post_detail
+            comment.save()
+            return HttpResponseRedirect(reverse('post', args=[post_url]))
+
+        context = {"post": post_detail,
+                   "tags": post_detail.tags.all(),
+                   "comment_form": CommentForm}
+        return render(request, "post.html", context)
