@@ -50,10 +50,9 @@ class PostView(View):
     def post(self, request, post_url):
         comment_form = CommentForm(request.POST)
         post_detail = get_object_or_404(Post, url=post_url, status=2)
-
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
-            comment.post_id = post_detail
+            comment.post = post_detail
             comment.save()
             return HttpResponseRedirect(reverse('post', args=[post_url]))
 

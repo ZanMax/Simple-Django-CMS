@@ -94,11 +94,13 @@ class Comment(models.Model):
     user_email = models.CharField(max_length=120)
     user_ip = models.CharField(max_length=120)
     comment = models.TextField()
-    post_id = models.ForeignKey(
+    post = models.ForeignKey(
         Post, on_delete=models.DO_NOTHING, null=True, related_name="comments")
     date = models.DateTimeField()
     approved = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
+        self.user_ip = "0.0.0.0"
         now = datetime.datetime.now()
         self.date = now.strftime("%Y-%m-%d %H:%M:%S")
+        super().save(*args, **kwargs)
