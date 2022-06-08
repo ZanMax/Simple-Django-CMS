@@ -44,7 +44,9 @@ class PostView(View):
         post_detail = get_object_or_404(Post, url=post_url, status=2)
         context = {"post": post_detail,
                    "tags": post_detail.tags.all(),
-                   "comment_form": CommentForm}
+                   "comment_form": CommentForm,
+                   "comments": post_detail.comments.all().order_by("-date")
+                   }
         return render(request, "post.html", context)
 
     def post(self, request, post_url):

@@ -51,3 +51,13 @@
     position: relative;
     z-index: 4;
 }
+
+.comments {
+    margin: 20px;
+    padding: 10px;
+    display: block;
+    border: 1px solid black;
+}
+.comment {
+    margin: 10px;
+}

@@ -104,3 +104,6 @@ class Comment(models.Model):
         now = datetime.datetime.now()
         self.date = now.strftime("%Y-%m-%d %H:%M:%S")
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.user_name} - {self.user_email}'

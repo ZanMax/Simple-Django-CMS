@@ -2,44 +2,70 @@
 {% load static %}
 
 {% block title %}
-Blog post page
+    Blog post page
 {% endblock %}
 
 {% block css_files %}
-<link href="{% static 'css/blog.css' %}" rel="stylesheet">
+    <link href="{% static 'css/blog.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 blog-main">
+    <div class="row">
+        <div class="col-md-8 blog-main">
 
-        <div class="blog-post blog-post-detail">
-            <h2 class="blog-post-title">{{post.title}}</h2>
-            <small>Tags:
-                {% for tag in tags %}
-                    <a href="/search/tag/{{ tag }}">{{ tag }}</a>
-                {% endfor %}
-            </small>
-            <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a></p>
-            {{ post.text | safe }}
-        </div>
-        {% if post.comment_allowed %}
-        <div>
-            <form action="{% url 'post' post.url %}" method="POST" class="comment-form">
-                {% csrf_token %}
-                {% for comment_field in comment_form %}
-                <div class="form-control">
-                    {{ comment_field.label_tag }}
-                    {{ comment_field }}
-                    {{ comment_field.errors }}
+            <div class="blog-post blog-post-detail">
+                <h2 class="blog-post-title">{{ post.title }}</h2>
+                <small>Tags:
+                    {% for tag in tags %}
+                        <a href="/search/tag/{{ tag }}">{{ tag }}</a>
+                    {% endfor %}
+                </small>
+                <p class="blog-post-meta">{{ post.date }} by <a href="#">{{ post.author }}</a></p>
+                {{ post.text | safe }}
+            </div>
+            {% if comments %}
+                <div class="container comments">
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <strong>Name:</strong> {{ comment.user_name }}
+                                </div>
+                                <div class="col-sm">
+                                    <strong>Date:</strong> {{ comment.date }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <strong>Comment:</strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    {{ comment.comment }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-                <div class="form-control">
-                    <button>Save comment</button>
+            {% endif %}
+            {% if post.comment_allowed %}
+                <div>
+                    <form action="{% url 'post' post.url %}" method="POST" class="comment-form">
+                        {% csrf_token %}
+                        {% for comment_field in comment_form %}
+                            <div class="form-control">
+                                {{ comment_field.label_tag }}
+                                {{ comment_field }}
+                                {{ comment_field.errors }}
+                            </div>
+                        {% endfor %}
+                        <div class="form-control">
+                            <button>Save comment</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
-</div>
 {% endblock %}

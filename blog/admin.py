@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, PostStatuses, PostTypes, Author, Tags
+from .models import Post, PostStatuses, PostTypes, Author, Tags, Comment
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.admin import GroupAdmin, UserAdmin
 from django.conf import settings
@@ -11,12 +11,18 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {"url": ("title",)}
     readonly_fields = ("post_modified",)
     list_filter = ("post_type", "status", "author")
-    list_display = ("title", "date", "author", "status", )
+    list_display = ("title", "date", "author", "status",)
 
 
 class AuthorAdmin(admin.ModelAdmin):
     list_filter = ("articles_count", "experience",)
     list_display = ("first_name", "last_name", "articles_count", "experience",)
+
+
+class CommentAdmin(admin.ModelAdmin):
+    fields = ('user_name', 'user_email', 'user_ip', 'date', 'comment', 'post', 'approved')
+    list_filter = ("user_name", "user_email")
+    list_display = ("user_name", "user_email", "comment",)
 
 
 class PostStatusesAdmin(admin.ModelAdmin):
@@ -33,7 +39,7 @@ class TagsAdmin(admin.ModelAdmin):
 
 class MyAdminSite(admin.AdminSite):
     def get_app_list(self, request):
-        #ordering = settings.ORDERING_APPS
+        # ordering = settings.ORDERING_APPS
 
         app_dict = self._build_app_dict(request)
 
@@ -50,7 +56,6 @@ class MyAdminSite(admin.AdminSite):
 mysite = MyAdminSite()
 admin.site = mysite
 
-
 admin.site.site_header = "CMS Admin"
 admin.site.site_title = "CMS Admin"
 admin.site.index_title = "Welcome to CMS"
@@ -61,6 +66,7 @@ admin.site.register(Author, AuthorAdmin)
 admin.site.register(PostStatuses)
 admin.site.register(PostTypes)
 admin.site.register(Tags)
+admin.site.register(Comment, CommentAdmin)
 
 admin.site.register(Group, GroupAdmin)
 admin.site.register(User, UserAdmin)
