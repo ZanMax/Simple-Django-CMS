@@ -26,26 +26,28 @@
             {% if comments %}
                 <div class="container comments">
                     {% for comment in comments %}
-                        <div class="comment">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <strong>Name:</strong> {{ comment.user_name }}
+                        {% if comment.approved %}
+                            <div class="comment">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <strong>Name:</strong> {{ comment.user_name }}
+                                    </div>
+                                    <div class="col-sm">
+                                        <strong>Date:</strong> {{ comment.date }}
+                                    </div>
                                 </div>
-                                <div class="col-sm">
-                                    <strong>Date:</strong> {{ comment.date }}
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <strong>Comment:</strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        {{ comment.comment }}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm">
-                                    <strong>Comment:</strong>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm">
-                                    {{ comment.comment }}
-                                </div>
-                            </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             {% endif %}
