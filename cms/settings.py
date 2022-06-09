@@ -20,7 +20,6 @@ environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -28,10 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -89,7 +87,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cms.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -104,7 +101,6 @@ DATABASES = {
         'PORT': env('DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -124,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -135,7 +130,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -149,3 +143,22 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = BASE_DIR / "uploads"
+MEDIA_URL = "/files/"
+
+# S3 Storage configuration
+"""
+AWS_STORAGE_BUCKET_NAME = "<your-s3-bucketname>"
+AWS_S3_REGION_NAME = "<your-s3-bucket-region>"
+AWS_ACCESS_KEY_ID = "<your-aws-access-key-id>"
+AWS_SECRET_ACCESS_KEY = "<your-aws-secret-access-key>"
+
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+STATICFILES_FOLDER = "static"
+MEDIAFILES_FOLDER = "media"
+
+STATICFILES_STORAGE = "custom_storages.StaticFileStorage"
+DEFAULT_FILE_STORAGE = "custom_storages.MediaFileStorage"
+"""
