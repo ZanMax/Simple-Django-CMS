@@ -43,7 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
+
+SITE_ID = int(env('SITE_ID'))
+
 """
 ORDERING_APPS = {
     "Posts": 1,

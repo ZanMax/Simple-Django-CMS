@@ -53,8 +53,10 @@ class MyAdminSite(admin.AdminSite):
         return app_list
 
 
+"""
 mysite = MyAdminSite()
 admin.site = mysite
+"""
 
 admin.site.site_header = "CMS Admin"
 admin.site.site_title = "CMS Admin"
@@ -68,5 +70,5 @@ admin.site.register(PostTypes)
 admin.site.register(Tags)
 admin.site.register(Comment, CommentAdmin)
 
-admin.site.register(Group, GroupAdmin)
-admin.site.register(User, UserAdmin)
+# admin.site.register(Group, GroupAdmin)
+# admin.site.register(User, UserAdmin)
