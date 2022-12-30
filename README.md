@@ -8,10 +8,15 @@ Simple Django CMS with core features like content management, user management, a
 - Create/edit blog comments
 
 ## Installation
-### Dev Env
 
+### Dev Env
+```bash
 pip3 install -r requirements.txt
+```
+```bash
 python manage.py runserver
+```
+
 Dev server: http://127.0.0.1:8000/
 
 ### Prod Env
